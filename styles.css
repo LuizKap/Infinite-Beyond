@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-background2: #130625;
+    --color-background1: #421e74;
+    --color-header1: #4c1274;
+    --color-header2: #c5c1cc;
+    --font-title: "Saira", sans-serif;
+    --font-text: 'Rajdhani', sans-serif;
+}
+
+
+header {
+    background: linear-gradient(to right, var(--color-header1), #b7f8048a 90%);
+    height: 13%;
+    box-shadow: 0 5px 15px 2px;
+
+    display: flex;
+    align-items: center;
+    column-gap: 10rem;
+}
+
+#header-h1 {
+    font-family: var(--font-title);
+    background: linear-gradient(to right, #9c42f1, #d9ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: oblique;
+}
+
+#astronaut-img {
+    height: 5rem;
+}
+
+header>div {
+    width: 50%;
+
+    display: flex;
+    align-items: center;
+}
+
+#header-nav {
+    width: 50%;
+
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav-buttons {
+    text-decoration: none;
+    color: #2b0f44;
+    font-family: var(--font-text);
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+#search-button,
+#favorites-button,
+#filter-button {
+    background-color: #a179c7;
+    border: solid 1px;
+    border-radius: 10px 0px;
+    width: 7rem;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+}
+#search-button:hover,
+#favorites-button:hover,
+#filter-button:hover{
+    box-shadow: inset 0px 5px 10px 0;
+    transition: 0.4s;
+    transform: scale(1.05);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+.li-cards {
+    list-style: none;
+}
+
+#section-games {
+    margin-top: 2rem;
+    background: linear-gradient(to bottom, #290a3d, #5b7418);
+    height: 30rem;
+    width: 70rem;
+    border-radius: 40px 5px;
+    /*box-shadow: -10px 10px 10px 5px ;*/
+    border-right: #00000093 solid 15px;
+    border-left: #000000a2 solid 15px;
+
+    overflow-y: scroll;
+}
+
+#section-games::-webkit-scrollbar {
+    width: 0px;
+}
+
+#section-games-title {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    background: linear-gradient(to right, #8319e7, #d9ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: oblique;
+    display: flex;
+    justify-content: center;
+}
+
+#cards-list {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cards {
+    background-color: #d5b7e0;
+    height: 12rem;
+    width: 15rem;
+    box-shadow: 0 10px 10px 2px;
+    border-radius: 10px;
+}

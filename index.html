@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DashBoard Jogos</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="dist/script.js" type="module" defer></script>
     <script src="finisher-header.es5.min.js" type="text/javascript"></script>
 </head>
 
@@ -13,7 +14,7 @@
     <header>
         <div>
             <img id="astronaut-img" src="img/astronaut.png" alt="astronaut image">
-            <h1 id="header-h1">Infinite&Beyond Games</h1>
+            <h1 id="header-h1">Infinite&Beyond</h1>
         </div>
 
         <nav id="header-nav">
@@ -27,13 +28,15 @@
 
     <main>
         <section id="section-games">
-            <h2 id="section-games-title">HIGHLIGHTS</h2>
+            <h2 id="section-games-title">ALL GAMES</h2>
             <ul id="cards-list">
                 <li class="li-cards">
                     <div class="cards">
                         <img src="" alt="game image" loading="lazy" class="cards-img">
+                        <div id="div-favorite_title">
                         <img src="img/heart-svgrepo-com.svg" alt="favorite icon" class="favorite-icon">
-                        <h3 class="games-title"> </h3>
+                        <h3 class="games-title"></h3>
+                        </div>
                     </div>
                 </li>
                 <li class="li-cards">
@@ -142,6 +145,7 @@
                     </div>
                 </li>
             </ul>
+            <button type="button" id="load-button">LOAD MORE</button>
         </section>
     </main>
 

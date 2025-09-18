@@ -144,16 +144,59 @@ main {
 }
 
 .cards {
-    background-color: #d5b7e0;
-    height: 12rem;
+    background: linear-gradient(to bottom, #000000 78%, #b015d6);
+    height: 15rem;
     width: 15rem;
     box-shadow: 0 10px 10px 2px;
     border-radius: 10px;
+    
+    border: inset 10px #9c42f1;
+}
+.cards-img{
+    cursor: pointer;
+    object-fit: cover;
+    width: 100%;
+    height: 11rem;
+    border-radius: 10px;
+}
 
+.cards-img.clicked {
+    transition: 0.5s;
+    filter: blur(5px);
+}
+
+.favorite-icon {
+    width: 3rem;
+    height: 2rem;
+    cursor: pointer;
+    
+}
+
+.favorite-icon.clicked {
+    transform: scale(1.2);
+    transition: 0.2s;
+}
+
+.games-title{
+    padding: 0 0 0 3.5rem;
+}
+
+#div-favorite_title{
     display: flex;
 }
 
-.favorite-icon{
-    width: 3rem;
-    height: 4rem;
+#load-button {
+    background-color: #a179c7;
+    border: solid 1px;
+    border-radius: 10px 10px;
+    width: 15rem;
+    cursor: pointer;
+    font-family: var(--font-text);
+    font-weight: 600;
+    font-size: 1.1em;
+    margin: 0 auto 0 auto;
+
+    display: flex;
+    justify-content: center;
+    
 }

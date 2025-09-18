@@ -1,1 +1,6 @@
-notThis.env
+node_modules
+tsconfig.json
+package-lock.json
+package.json
+/dist/*
+!dist/script.js

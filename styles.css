@@ -7,10 +7,6 @@
 }
 
 :root {
-    --color-background2: #130625;
-    --color-background1: #421e74;
-    --color-header1: #4c1274;
-    --color-header2: #c5c1cc;
     --font-title: "Saira", sans-serif;
     --font-text: 'Rajdhani', sans-serif;
 }
@@ -32,8 +28,12 @@ html::-webkit-scrollbar-track {
     background-color: #280644;
 }
 
+body {
+    height: 100%;
+}
+
 header {
-    background: linear-gradient(to right, var(--color-header1), #b7f8048a 90%);
+    background: linear-gradient(to right, #4c1274, #b7f8048a 90%);
     height: 13%;
     box-shadow: 0 5px 15px 2px;
 
@@ -149,27 +149,28 @@ main {
     width: 15rem;
     box-shadow: 0 10px 10px 2px;
     border-radius: 10px;
-    
+    position: relative;
+
     border: inset 10px #9c42f1;
 }
-.cards-img{
+
+.cards-img {
     cursor: pointer;
     object-fit: cover;
     width: 100%;
     height: 11rem;
-    border-radius: 10px;
-}
-
-.cards-img.clicked {
-    transition: 0.5s;
-    filter: blur(5px);
 }
 
 .favorite-icon {
     width: 3rem;
     height: 2rem;
     cursor: pointer;
-    
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+
+    border: #280644 solid 5px;
+    border-radius: 50%;
 }
 
 .favorite-icon.clicked {
@@ -177,12 +178,18 @@ main {
     transition: 0.2s;
 }
 
-.games-title{
-    padding: 0 0 0 3.5rem;
+.games-title {
+    font-size: 1rem;
+    font-family: var(--font-text);
+    font-weight: 800;
+    display: inline-block;
+
 }
 
-#div-favorite_title{
+.div-favorite_title {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #load-button {
@@ -198,5 +205,33 @@ main {
 
     display: flex;
     justify-content: center;
+
+}
+
+#fullscreen-card {
+    position: fixed;
+    z-index: 9999;
+    background-color: #000000;
+    border: solid 10px #7e0f888c;
+    border-radius: 30px;
+    height: 60%;
+
+    display: none;
+}
+
+#fullscreen-title-description{
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 1.1rem;
+    border: solid 10px;
+    border-radius: 30px;
+    overflow: scroll;
+}
+#fullscree-game-description{
     
+}
+
+#fullscreen-img {
+    width: 45%;
+    object-fit: cover;
 }

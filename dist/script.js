@@ -1,13 +1,54 @@
-renderGames(16, 1);
-document.querySelectorAll('.cards-img').forEach(img => {
-    img.addEventListener('click', (event) => {
-        const target = event.currentTarget;
-        fullscreenCard(target);
+let currentPage = 1;
+function elementConstructor(element, className, id) {
+    const el = document.createElement(element);
+    el.className = className ?? '';
+    el.id = id ?? '';
+    return el;
+}
+function imageConstructor(element, className, alt, id, src) {
+    const img = document.createElement(element);
+    img.id = id;
+    img.className = className;
+    img.alt = alt;
+    img.src = src ?? '';
+    img.loading = 'lazy';
+    return img;
+}
+function renderCards(games) {
+    const cards_list = document.querySelector('#cards-list');
+    if (!cards_list)
+        return;
+    games?.results.forEach(game => {
+        const li = elementConstructor('li', 'li-cards');
+        const div_cards = elementConstructor('div', 'cards');
+        const img_game = imageConstructor('img', 'cards-img', 'game image', game.id.toString(), game.background_image);
+        const div_favorite_title = elementConstructor('div', 'div-favorite_title');
+        const img_favorite = imageConstructor('img', 'favorite-icon', 'favorite icon', game.id.toString(), "./img/heart-svgrepo-com.svg");
+        const h3 = elementConstructor('h3', 'games-title');
+        h3.textContent = game.name;
+        div_favorite_title.append(img_favorite, h3);
+        div_cards.append(img_game, div_favorite_title);
+        li.appendChild(div_cards);
+        cards_list.appendChild(li);
     });
+}
+document.querySelector('#cards-list')?.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target.classList.contains('cards-img')) {
+        fullscreenCard(target);
+    }
 });
-document.querySelector('#fullscreen-card')?.addEventListener('click', (event) => {
+//listener pra sair do card full screen
+document.querySelector('#fullscreen-card').addEventListener('click', (event) => {
+    const main = document.querySelector('main');
     const target = event.currentTarget;
     target.style.display = 'none';
+    main.style.removeProperty('filter');
+});
+document.querySelector('#load-button').addEventListener('click', async () => {
+    currentPage++;
+    const games = await fetchGames(16, currentPage);
+    renderCards(games);
 });
 // Funcao generica so pra receber a resposta da api
 async function fetchApi(url) {
@@ -28,43 +69,47 @@ async function fetchApi(url) {
         throw error;
     }
 }
-//funcao para renderizar as imagens dos jogos
-async function renderGames(page_size, page) {
-    const games = await fetchApi(`https://api.rawg.io/api/games?page_size=${page_size}&page=${page}&`);
-    if (!games)
-        return;
-    document.querySelectorAll('.cards-img').forEach((img, i) => {
-        img.src = games.results[i]?.background_image ?? 'IMG_ERROR';
-        const id_string = games.results[i]?.id.toString();
-        if (!id_string)
-            return;
-        img.id = id_string;
-    });
-    document.querySelectorAll('.games-title').forEach((title, i) => {
-        title.textContent = games.results[i]?.name ?? 'TITLE ERROR';
-    });
+//funcao para pegar os games
+async function fetchGames(page_size, page) {
+    try {
+        const games = await fetchApi(`https://api.rawg.io/api/games?page_size=${page_size}&page=${page}&`);
+        if (!games)
+            throw new Error('Erro ao renderizar jogos');
+        return games;
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 //funcao que vai pegar a div com a img e renderizar o game em fullscreen
 async function fullscreenCard(target) {
     try {
+        //console.log(target)
+        const main = document?.querySelector('main');
         const game_detail = await fetchApi(`https://api.rawg.io/api/games/${target.id}?`);
         if (!game_detail)
-            return;
+            throw new Error('Id nao encontrado');
         const full_card = document.querySelector('#fullscreen-card');
         const full_title = full_card?.querySelector('#fullscreen-game-title');
         const full_paragraph = full_card?.querySelector("#fullscreen-game-description");
         const full_img = full_card?.querySelector('#fullscreen-img');
-        if (!full_img || !full_title || !full_paragraph || !full_card) {
+        if (!full_img || !full_title || !full_paragraph || !full_card || !main) {
             throw new Error('Tag não encontrada');
         }
         full_img.src = target.src;
         full_title.textContent = game_detail.name;
         full_paragraph.innerHTML = game_detail.description;
         full_card.style.display = 'flex';
+        main.style.filter = 'blur(10px)';
     }
     catch (error) {
         console.log(error);
     }
 }
+async function main() {
+    const games = await fetchGames(16, 1);
+    renderCards(games);
+}
+main();
 export {};
 //# sourceMappingURL=script.js.map

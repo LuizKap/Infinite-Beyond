@@ -1,5 +1,6 @@
 
 
+let currentPage: number = 1
 interface Game {
     id: number
     name: string
@@ -12,25 +13,77 @@ type ApiResponse = {
     results: Game[]
 }
 
-interface GameDetails extends  Game {
+interface GameDetails extends Game {
     description: string
 }
 
-renderGames(16,1)
+function elementConstructor(element: string, className?: string, id?: string): HTMLElement {
 
-document.querySelectorAll('.cards-img').forEach(img => {
-    img.addEventListener('click', (event) => {
-        const target = event.currentTarget as HTMLImageElement
-        fullscreenCard(target)
-        
+    const el = document.createElement(element) as HTMLElement
+    el.className = className ?? ''
+    el.id = id ?? ''
+    return el
+}
+
+function imageConstructor(element: string, className: string, alt: string, id: string, src?: string): HTMLImageElement {
+
+    const img = document.createElement(element) as HTMLImageElement
+    img.id = id
+    img.className = className
+    img.alt = alt
+    img.src = src ?? ''
+    img.loading = 'lazy'
+    return img
+}
+
+function renderCards(games?: ApiResponse) {
+
+    const cards_list = document.querySelector<HTMLElement>('#cards-list')
+    if (!cards_list) return
+
+    games?.results.forEach(game => {
+        const li = elementConstructor('li', 'li-cards')
+        const div_cards = elementConstructor('div', 'cards')
+        const img_game = imageConstructor('img', 'cards-img', 'game image', game.id.toString(), game.background_image)
+        const div_favorite_title = elementConstructor('div', 'div-favorite_title')
+        const img_favorite = imageConstructor('img', 'favorite-icon', 'favorite icon', game.id.toString(), "./img/heart-svgrepo-com.svg")
+        const h3 = elementConstructor('h3', 'games-title')
+        h3.textContent = game.name
+
+        div_favorite_title.append(img_favorite, h3)
+        div_cards.append(img_game, div_favorite_title)
+        li.appendChild(div_cards)
+        cards_list.appendChild(li)
     })
+
+}
+
+document.querySelector('#cards-list')?.addEventListener('click', (event) => {
+    const target = event.target as HTMLImageElement
+
+    if (target.classList.contains('cards-img')) {
+        fullscreenCard(target)
+    }
+
 })
 
-document.querySelector('#fullscreen-card')?.addEventListener('click', (event)=>{
+//listener pra sair do card full screen
+document.querySelector('#fullscreen-card')!.addEventListener('click', (event) => {
+    const main = document.querySelector('main') as HTMLElement
     const target = event.currentTarget as HTMLDivElement
     target.style.display = 'none'
+
+    main.style.removeProperty('filter')
+
 })
 
+document.querySelector('#load-button')!.addEventListener('click', async () => {
+
+    currentPage++
+    const games = await fetchGames(16, currentPage)
+    renderCards(games)
+
+})
 
 
 // Funcao generica so pra receber a resposta da api
@@ -57,54 +110,61 @@ async function fetchApi<T>(url: string): Promise<T> {
 
 }
 
-//funcao para renderizar as imagens dos jogos
-async function renderGames(page_size: number, page: number) {
+//funcao para pegar os games
+async function fetchGames(page_size: number, page: number): Promise<ApiResponse | undefined> {
 
-    const games = await fetchApi<ApiResponse>(`https://api.rawg.io/api/games?page_size=${page_size}&page=${page}&`)
+    try {
+        const games = await fetchApi<ApiResponse>(`https://api.rawg.io/api/games?page_size=${page_size}&page=${page}&`)
+        if (!games) throw new Error('Erro ao renderizar jogos')
 
-    if (!games) return
+        return games
 
-    document.querySelectorAll<HTMLImageElement>('.cards-img').forEach((img, i: number) => {
-        img.src = games.results[i]?.background_image ?? 'IMG_ERROR'
-        const  id_string = games.results[i]?.id.toString()
-        if(!id_string) return
+    } catch (error) {
+        console.log(error)
+    }
 
-        img.id = id_string
-    })
-    document.querySelectorAll<HTMLTitleElement>('.games-title').forEach((title, i: number) => {
-        title.textContent = games.results[i]?.name ?? 'TITLE ERROR'
-    })
 }
 
 //funcao que vai pegar a div com a img e renderizar o game em fullscreen
 async function fullscreenCard(target: HTMLImageElement) {
     try {
+        //console.log(target)
 
+        const main = document?.querySelector<HTMLElement>('main')
 
         const game_detail = await fetchApi<GameDetails>(`https://api.rawg.io/api/games/${target.id}?`)
 
-        if(!game_detail) return
+        if (!game_detail) throw new Error('Id nao encontrado')
 
         const full_card = document.querySelector<HTMLElement>('#fullscreen-card')
 
         const full_title = full_card?.querySelector<HTMLElement>('#fullscreen-game-title')
         const full_paragraph = full_card?.querySelector<HTMLParagraphElement>("#fullscreen-game-description")
         const full_img = full_card?.querySelector<HTMLImageElement>('#fullscreen-img')
-        
 
-        if(!full_img || !full_title || !full_paragraph || !full_card){
+
+        if (!full_img || !full_title || !full_paragraph || !full_card || !main) {
             throw new Error('Tag não encontrada')
         }
-        
+
         full_img.src = target.src
         full_title.textContent = game_detail.name
         full_paragraph.innerHTML = game_detail.description
         full_card.style.display = 'flex'
-       
-
+        main.style.filter = 'blur(10px)'
 
     } catch (error) {
         console.log(error)
     }
 }
+
+async function main() {
+    const games = await fetchGames(16, 1)
+    renderCards(games)
+
+}
+
+main()
+
+
 

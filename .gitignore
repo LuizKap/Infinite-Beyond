@@ -3,4 +3,8 @@ tsconfig.json
 package-lock.json
 package.json
 /dist/*
-!dist/script.js
+!dist/Fetchs.js
+!dist/main.js
+!dist/Renders.js
+!dist/Constructors.js
+!dist/Types.js

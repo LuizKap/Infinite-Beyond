@@ -2,12 +2,12 @@ import { type ApiResponse, type GameDetails } from "./Types.js"
 import { fetchApi } from "./Fetchs.js";
 import { elementConstructor, imageConstructor } from "./Constructors.js";
 
-export function renderCards(games?: ApiResponse) {
+export function renderCards(games: ApiResponse) {
 
     const cards_list = document.querySelector<HTMLElement>('#cards-list')
     if (!cards_list) return
 
-    games?.results.forEach(game => {
+    games.results.forEach(game => {
         const li = elementConstructor('li', 'li-cards')
         const div_cards = elementConstructor('div', 'cards')
         const img_game = imageConstructor('img', 'cards-img', 'game image', game.id.toString(), game.background_image)
@@ -20,19 +20,18 @@ export function renderCards(games?: ApiResponse) {
         div_cards.append(img_game, div_favorite_title)
         li.appendChild(div_cards)
         cards_list.appendChild(li)
+
     })
 
 }
 
-
 export async function fullscreenCard(target: HTMLImageElement) {
-    try {
-
+    
         const main = document?.querySelector<HTMLElement>('main')
 
         const game_detail = await fetchApi<GameDetails>(`https://api.rawg.io/api/games/${target.id}?`)
 
-        if (!game_detail) throw new Error('Id nao encontrado')
+        if (!game_detail) return null
 
         const full_card = document.querySelector<HTMLElement>('#fullscreen-card')
 
@@ -42,7 +41,7 @@ export async function fullscreenCard(target: HTMLImageElement) {
 
 
         if (!full_img || !full_title || !full_paragraph || !full_card || !main) {
-            throw new Error('Tag não encontrada')
+            return null
         }
 
         full_img.src = target.src
@@ -50,8 +49,12 @@ export async function fullscreenCard(target: HTMLImageElement) {
         full_paragraph.innerHTML = game_detail.description
         full_card.style.display = 'flex'
         main.style.filter = 'blur(10px)'
+}
 
-    } catch (error) {
-        console.log(error)
-    }
+export function ExitFullscreen(event: Event): void {
+    const main = document.querySelector('main') as HTMLElement
+    const target = event.currentTarget as HTMLDivElement
+    target.style.display = 'none'
+
+    main.style.removeProperty('filter')
 }

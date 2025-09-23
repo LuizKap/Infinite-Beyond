@@ -41,4 +41,10 @@ export async function fullscreenCard(target) {
         console.log(error);
     }
 }
+export function ExitFullscreen(event) {
+    const main = document.querySelector('main');
+    const target = event.currentTarget;
+    target.style.display = 'none';
+    main.style.removeProperty('filter');
+}
 //# sourceMappingURL=Renders.js.map

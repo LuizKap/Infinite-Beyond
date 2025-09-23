@@ -53,7 +53,8 @@ header {
 #astronaut-img {
     height: 5rem;
 }
-#home{
+
+#home {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -104,7 +105,7 @@ header>div {
     transform: scale(1.05);
 }
 
-#search-input{
+#search-input {
     width: 12rem;
     font-size: 1rem;
     font-family: var(--font-text);
@@ -114,7 +115,8 @@ header>div {
 
     display: none;
 }
-#search-input:focus{
+
+#search-input:focus {
     border-color: #aee90ede;
     outline: none;
     transition: 0.2s ease;
@@ -201,7 +203,8 @@ main {
     border: #34125080 solid 5px;
     border-radius: 40%;
 }
-.favorite-icon:hover{
+
+.favorite-icon:hover {
     cursor: grab;
     box-shadow: inset 10px 10px 10px 10px rgb(200, 255, 0);
 }
@@ -217,6 +220,7 @@ main {
     font-weight: 800;
     display: inline-block;
 
+    color: white;
 }
 
 .div-favorite_title {
@@ -225,20 +229,6 @@ main {
     justify-content: center;
 }
 
-#load-button {
-    background-color: #a179c7;
-    border: solid 1px;
-    border-radius: 10px 10px;
-    width: 15rem;
-    cursor: pointer;
-    font-family: var(--font-text);
-    font-weight: 600;
-    font-size: 1.1em;
-    margin: 0 auto 0 auto;
-
-    display: flex;
-    justify-content: center;
-}
 
 #fullscreen-card {
     position: fixed;
@@ -263,4 +253,19 @@ main {
 #fullscreen-img {
     width: 45%;
     object-fit: cover;
+}
+
+#load-button {
+    background-color: #a179c7;
+    border: solid 1px;
+    border-radius: 10px 10px;
+    width: 15rem;
+    cursor: pointer;
+    font-family: var(--font-text);
+    font-weight: 600;
+    font-size: 1.1em;
+    margin: 0 auto 0 auto;
+
+    display: flex;
+    justify-content: center;
 }

@@ -8,3 +8,4 @@ package.json
 !dist/Renders.js
 !dist/Constructors.js
 !dist/Types.js
+!dist/results.js

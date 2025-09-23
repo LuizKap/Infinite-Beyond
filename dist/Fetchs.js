@@ -12,7 +12,8 @@ export async function fetchApi(url) {
         return data;
     }
     catch (error) {
-        console.log(error);
+        const h2 = document.querySelector('#section-games-title');
+        h2.textContent = 'Algo deu errado :( Tente recarregar a página';
         throw error;
     }
 }

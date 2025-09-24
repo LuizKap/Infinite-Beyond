@@ -4,7 +4,7 @@ export function renderCards(games) {
     const cards_list = document.querySelector('#cards-list');
     if (!cards_list)
         return;
-    games?.results.forEach(game => {
+    games.results.forEach(game => {
         const li = elementConstructor('li', 'li-cards');
         const div_cards = elementConstructor('div', 'cards');
         const img_game = imageConstructor('img', 'cards-img', 'game image', game.id.toString(), game.background_image);
@@ -19,27 +19,22 @@ export function renderCards(games) {
     });
 }
 export async function fullscreenCard(target) {
-    try {
-        const main = document?.querySelector('main');
-        const game_detail = await fetchApi(`https://api.rawg.io/api/games/${target.id}?`);
-        if (!game_detail)
-            throw new Error('Id nao encontrado');
-        const full_card = document.querySelector('#fullscreen-card');
-        const full_title = full_card?.querySelector('#fullscreen-game-title');
-        const full_paragraph = full_card?.querySelector("#fullscreen-game-description");
-        const full_img = full_card?.querySelector('#fullscreen-img');
-        if (!full_img || !full_title || !full_paragraph || !full_card || !main) {
-            throw new Error('Tag não encontrada');
-        }
-        full_img.src = target.src;
-        full_title.textContent = game_detail.name;
-        full_paragraph.innerHTML = game_detail.description;
-        full_card.style.display = 'flex';
-        main.style.filter = 'blur(10px)';
+    const main = document?.querySelector('main');
+    const game_detail = await fetchApi(`https://api.rawg.io/api/games/${target.id}?`);
+    if (!game_detail)
+        return null;
+    const full_card = document.querySelector('#fullscreen-card');
+    const full_title = full_card?.querySelector('#fullscreen-game-title');
+    const full_paragraph = full_card?.querySelector("#fullscreen-game-description");
+    const full_img = full_card?.querySelector('#fullscreen-img');
+    if (!full_img || !full_title || !full_paragraph || !full_card || !main) {
+        return null;
     }
-    catch (error) {
-        console.log(error);
-    }
+    full_img.src = target.src;
+    full_title.textContent = game_detail.name;
+    full_paragraph.innerHTML = game_detail.description;
+    full_card.style.display = 'flex';
+    main.style.filter = 'blur(10px)';
 }
 export function ExitFullscreen(event) {
     const main = document.querySelector('main');

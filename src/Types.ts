@@ -9,6 +9,7 @@ export interface Game {
 
 export type ApiResponse = {
     results: Game[]
+    count: number,
     next: string | null
 }
 
@@ -16,7 +17,8 @@ export interface GameDetails extends Game {
     description: string
 }
 
-export function error(){
+
+export function errorh2(text: string){
     const h2 = document.querySelector('#section-games-title') as HTMLTitleElement
-    h2.textContent = 'Algo deu errado :( Tente recarregar a página'
+    h2.textContent = text
 }

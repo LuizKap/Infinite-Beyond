@@ -1,36 +1,27 @@
 import { fetchApi } from "./Fetchs.js";
-import { renderCards } from "./Renders.js";
-import { ApiResponse, error } from "./Types.js";
+
+import { ApiResponse } from "./Types.js";
 
 
 export async function search(text: string) {
 
-    
-        if (!text) {
-            return null
-        }
+    if (!text) {
+        return null
+    }
 
-        const games = await fetchApi<ApiResponse>(`https://api.rawg.io/api/games?search=${text}&page_size=5&`)
+    const games = await fetchApi<ApiResponse>(`https://api.rawg.io/api/games?search=${text}&page_size=5&`)
 
-        if (!games) {
-            error()
-            return null
-        }
+    if (!games || !games.results || games.results.length === 0) {
+        return null
+    }
 
-        if (games.results.length === 0) {
-            error()
-            return null
-        }
-        renderCards(games)
-    
+    return games
 
 }
 
 export function showSearchInput(button: HTMLButtonElement) {
     const search_button = button
     const input = document.querySelector('#search-input') as HTMLInputElement
-
-    if (!search_button) return
 
     search_button.style.display = 'none'
     input.style.display = 'flex'

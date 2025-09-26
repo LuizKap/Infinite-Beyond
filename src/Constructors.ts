@@ -4,12 +4,13 @@ export function elementConstructor(element: string, className?: string, id?: str
     el.id = id ?? ''
     return el
 }
-export function imageConstructor(element: string, className: string, alt: string, id: string, src?: string): HTMLImageElement {
+export function imageConstructor(element: string, className: string, alt: string, id: string, src?: string, clicked?: string): HTMLImageElement {
     const img = document.createElement(element) as HTMLImageElement
     img.id = id
     img.className = className
     img.alt = alt
     img.src = src ?? ''
     img.loading = 'lazy'
+    img.dataset.clicked = clicked
     return img
 }

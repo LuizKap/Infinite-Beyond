@@ -1,15 +1,17 @@
 import { fetchApi } from "./Fetchs.js";
+import { isApiResponse } from "./utils.js";
 import { elementConstructor, imageConstructor } from "./Constructors.js";
 export function renderCards(games) {
     const cards_list = document.querySelector('#cards-list');
     if (!cards_list)
         return;
-    games.results.forEach(game => {
+    let gamesArray_gamesResponse = isApiResponse(games) ? games.results : games;
+    gamesArray_gamesResponse.forEach(game => {
         const li = elementConstructor('li', 'li-cards');
         const div_cards = elementConstructor('div', 'cards');
         const img_game = imageConstructor('img', 'cards-img', 'game image', game.id.toString(), game.background_image);
         const div_favorite_title = elementConstructor('div', 'div-favorite_title');
-        const img_favorite = imageConstructor('img', 'favorite-icon', 'favorite icon', game.id.toString(), "./img/heart-svgrepo-com.svg");
+        const img_favorite = imageConstructor('img', 'favorite-icon', 'favorite icon', game.id.toString(), "../img/heart-svgrepo-com.svg", 'false');
         const h3 = elementConstructor('h3', 'games-title');
         h3.textContent = game.name;
         div_favorite_title.append(img_favorite, h3);
@@ -18,7 +20,7 @@ export function renderCards(games) {
         cards_list.appendChild(li);
     });
 }
-export async function fullscreenCard(target) {
+export async function Enterfullscreen(target) {
     const main = document?.querySelector('main');
     const game_detail = await fetchApi(`https://api.rawg.io/api/games/${target.id}?`);
     if (!game_detail)

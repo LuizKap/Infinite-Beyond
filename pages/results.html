@@ -4,27 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinite&Beyond</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="module" src="./dist/main.js" defer></script>
+    <title>Infinite&Beyond Results</title>
+    <link rel="stylesheet" href="../styles/results.css">
+    <script type="module" src="../dist/results.js" defer></script>
     <script src="finisher-header.es5.min.js" type="text/javascript"></script>
 </head>
 
 <body class="finisher-header">
     <header>
         <div id="home-div">
-            <a href="index.html" id="home"><img id="astronaut-img" src="img/astronaut.png" alt="astronaut image">
-            <h1 id="header-h1">Infinite&Beyond</h1></a>
+            <a href="index.html" id="home"><img id="astronaut-img" src="../img/astronaut.png" alt="astronaut image">
+                <h1 id="header-h1">Infinite&Beyond</h1>
+            </a>
         </div>
-
-        <nav id="header-nav">
-            <div id="search-div">
-                <button type="button" class="nav-buttons" id="search-button">Search</button>
-                <input type="search" id="search-input">
-            </div>
-            <a href="" class="nav-buttons" id="favorites-button">Favorites</a>
-            <a href="" class="nav-buttons" id="filter-button">Filter</a>
-        </nav>
+        <nav id="header-nav"><a href="favorites.html" class="nav-buttons" id="favorites-button">Favorites</a></nav>
     </header>
 
     <div id="fullscreen-card">
@@ -37,9 +30,8 @@
 
     <main>
         <section id="section-games">
-            <h2 id="section-games-title">ALL GAMES</h2>
-            <ul id="cards-list">
-            </ul>
+            <h2 id="section-games-title">RESULTS</h2>
+            <ul id="cards-list"></ul>
             <button type="button" id="load-button">LOAD MORE</button>
         </section>
     </main>

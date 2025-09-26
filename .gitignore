@@ -9,3 +9,5 @@ package.json
 !dist/Constructors.js
 !dist/Types.js
 !dist/results.js
+!dist/favorites.js
+!dist/utils.js

@@ -1,16 +1,17 @@
 import { fetchApi } from "./Fetchs.js";
-import { ExitFullscreen, fullscreenCard, renderCards } from "./Renders.js";
+import { ExitFullscreen, Enterfullscreen, renderCards } from "./Renders.js";
 import { search } from "./Search.js";
-import { errorh2 } from "./Types.js";
+import { showFavorites, errorh2, favoriteHandler } from "./utils.js";
+let favorite = JSON.parse(localStorage.getItem('favorites') || '[]');
 const query = localStorage.getItem('search');
 let next;
-init();
 async function init() {
     next = await showResults();
     if (next) {
         const result_title = document.querySelector('#section-games-title');
         result_title.textContent = `Showing Results For: ${query}`;
     }
+    showFavorites(favorite);
 }
 async function showResults() {
     if (!query) {
@@ -24,6 +25,10 @@ async function showResults() {
     renderCards(results);
     return results.next;
 }
+document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
+    const target = ev.target;
+    favorite = favoriteHandler(target, favorite);
+});
 document.querySelector('#cards-list')?.addEventListener('click', (event) => {
     if (!event.target) {
         console.log('Erro no event.target fullscreen');
@@ -31,7 +36,7 @@ document.querySelector('#cards-list')?.addEventListener('click', (event) => {
     }
     const target = event.target;
     if (target.classList.contains('cards-img')) {
-        fullscreenCard(target);
+        Enterfullscreen(target);
     }
 });
 document.querySelector('#fullscreen-card')?.addEventListener('click', (ev) => {
@@ -55,5 +60,7 @@ document.querySelector('#load-button')?.addEventListener('click', async (ev) => 
     next = next_results.next;
     loadBtn.disabled = false;
     loadBtn.textContent = 'LOAD MORE';
+    showFavorites(favorite);
 });
+init();
 //# sourceMappingURL=results.js.map

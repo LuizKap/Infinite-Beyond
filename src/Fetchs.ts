@@ -24,14 +24,16 @@ export async function fetchApi<T>(url: string): Promise<T | null> {
     }
 }
 
-export async function fetchGames(page_size: number, page: number): Promise<ApiResponse | null> {
+export async function fetchAllGames(page_size: number, page: number): Promise<ApiResponse | null> {
 
     const games = await fetchApi<ApiResponse>(`https://api.rawg.io/api/games?page_size=${page_size}&page=${page}&`)
     if (!games || !games.results || games.results.length === 0) {
-        console.log('FetchGames error')
+        console.log('fetchAllGames error')
         return null
     }
 
     return games
 }
+
+
 

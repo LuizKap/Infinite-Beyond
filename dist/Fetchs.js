@@ -17,10 +17,10 @@ export async function fetchApi(url) {
         return null;
     }
 }
-export async function fetchGames(page_size, page) {
+export async function fetchAllGames(page_size, page) {
     const games = await fetchApi(`https://api.rawg.io/api/games?page_size=${page_size}&page=${page}&`);
     if (!games || !games.results || games.results.length === 0) {
-        console.log('FetchGames error');
+        console.log('fetchAllGames error');
         return null;
     }
     return games;

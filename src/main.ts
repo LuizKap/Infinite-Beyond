@@ -1,11 +1,20 @@
 
-import { fetchGames } from "./Fetchs.js";
+import { fetchAllGames } from "./Fetchs.js";
 import { renderCards } from "./Renders.js";
-import { fullscreenCard, ExitFullscreen } from "./Renders.js";
+import { Enterfullscreen, ExitFullscreen } from "./Renders.js";
 import { exitSearchInput, showSearchInput } from "./Search.js";
-import { errorh2} from "./Types.js";
+import { favorites } from "./Types.js";
+import { favoriteHandler, errorh2, showFavorites } from "./utils.js";
 
 let currentPage: number = 1
+let favorite: favorites[]
+
+//Adicionar jogo aos favoritos
+document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
+
+    const target = ev.target as HTMLImageElement | null
+    favorite = favoriteHandler(target, favorite) as favorites[]
+})
 
 //Listener pra entrar no card fullscreen
 document.querySelector('#cards-list')?.addEventListener('click', (event) => {
@@ -15,7 +24,7 @@ document.querySelector('#cards-list')?.addEventListener('click', (event) => {
     }
     const target = event.target as HTMLImageElement
     if (target.classList.contains('cards-img')) {
-        fullscreenCard(target)
+        Enterfullscreen(target)
     }
 })
 
@@ -27,19 +36,28 @@ document.querySelector('#fullscreen-card')!.addEventListener('click', (event) =>
 //Listener pra carregar mais jogos
 document.querySelector('#load-button')!.addEventListener('click', async (ev) => {
     currentPage++
-    const games = await fetchGames(8, currentPage)
+    const loadBtn = ev.currentTarget as HTMLButtonElement
+
+    loadBtn.disabled = true
+    loadBtn.textContent = 'LOADING MORE RESULTS :D'
+
+    const games = await fetchAllGames(8, currentPage)
+
     if (!games) {
         errorh2('Error :(')
         return
     }
     if (!games.next) {
-        const loadButton = ev.currentTarget as HTMLButtonElement
-        if (loadButton) {
-            loadButton.disabled = true
-            loadButton.textContent = "No more games :("
+        if (loadBtn) {
+            loadBtn.disabled = true
+            loadBtn.textContent = "No more games :("
+            return
         }
     }
+    loadBtn.disabled = false
+    loadBtn.textContent = 'LOAD MORE'
     renderCards(games)
+    showFavorites(favorite)
 })
 
 //Abrir search
@@ -61,19 +79,23 @@ document.querySelector('#search-input')?.addEventListener('keydown', (ev) => {
             return
         }
         localStorage.setItem('search', search_input.value)
-        window.open('http://127.0.0.1:5500/results.html', '_blank')
+        window.open('http://127.0.0.1:5500/pages/results.html', '_blank')
     }
 })
 
+//É executado toda vez que a página carrega pra carregar os 8 primeiros jogos e pegar os favoritos do localStorage
 async function main() {
-    const games = await fetchGames(8, 1)
+    const games = await fetchAllGames(8, 1)
     if (!games) {
         errorh2('Error :(')
         return
     }
     renderCards(games)
-
+    const fav: favorites[] = JSON.parse(localStorage.getItem('favorites') || '[]')
+    favorite = fav
+    showFavorites(favorite)
 }
+
 main()
 
 

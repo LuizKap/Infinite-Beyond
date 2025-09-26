@@ -12,13 +12,9 @@ export type ApiResponse = {
     count: number,
     next: string | null
 }
-
 export interface GameDetails extends Game {
     description: string
 }
 
+export type favorites = { id: string, name: string }
 
-export function errorh2(text: string){
-    const h2 = document.querySelector('#section-games-title') as HTMLTitleElement
-    h2.textContent = text
-}

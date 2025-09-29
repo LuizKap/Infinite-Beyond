@@ -1,5 +1,5 @@
 import { fetchApi } from "./Fetchs.js";
-import { ApiResponse } from "./Types.js";
+import { GamesResponse } from "./Types.js";
 
 
 export async function search(text: string) {
@@ -8,7 +8,7 @@ export async function search(text: string) {
         return null
     }
 
-    const games = await fetchApi<ApiResponse>(`https://api.rawg.io/api/games?search=${text}&page_size=5&`)
+    const games = await fetchApi<GamesResponse>(`https://api.rawg.io/api/games?search=${text}&page_size=5&`)
 
     if (!games || !games.results || games.results.length === 0) {
         return null

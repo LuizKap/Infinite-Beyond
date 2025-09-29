@@ -2,7 +2,7 @@ export async function fetchApi(url) {
     try {
         const response = await fetch(`${url}key=0af97debc3b541ab8e2e4d0bfe020a54`);
         if (!response.ok) {
-            console.log('Erro na requisição');
+            console.log('Erro na requisição principal');
             return null;
         }
         const data = await response.json();
@@ -17,10 +17,26 @@ export async function fetchApi(url) {
         return null;
     }
 }
-export async function fetchAllGames(page_size, page) {
-    const games = await fetchApi(`https://api.rawg.io/api/games?page_size=${page_size}&page=${page}&`);
+export async function fetchAllGames(page_size, url) {
+    const games = await fetchApi(`${url}?page_size=${page_size}&`);
     if (!games || !games.results || games.results.length === 0) {
         console.log('fetchAllGames error');
+        return null;
+    }
+    return games;
+}
+export async function fetchGenres(page, page_size) {
+    const genres = await fetchApi(`https://api.rawg.io/api/genres?ordering=name&page=${page}&page_size=${page_size}&`);
+    if (!genres || !genres.results || genres.results.length === 0) {
+        console.log('fetchGenres error');
+        return null;
+    }
+    return genres;
+}
+export async function fetchGamesPerGenres(genreSlug, page_size, page) {
+    const games = await fetchApi(`https://api.rawg.io/api/games?genres=${genreSlug}&page_size=${page_size}&page=${page}&`);
+    if (!games || !games.results || games.results.length === 0) {
+        console.log('fetchGamesGenres error');
         return null;
     }
     return games;

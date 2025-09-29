@@ -1,11 +1,11 @@
 import { fetchApi } from "./Fetchs.js";
-import { isApiResponse } from "./utils.js";
-import { elementConstructor, imageConstructor } from "./Constructors.js";
+import { isGamesResponse } from "./utils.js";
+import { elementConstructor, imageConstructor, liGenresConstructor } from "./Constructors.js";
 export function renderCards(games) {
     const cards_list = document.querySelector('#cards-list');
     if (!cards_list)
         return;
-    let gamesArray_gamesResponse = isApiResponse(games) ? games.results : games;
+    let gamesArray_gamesResponse = isGamesResponse(games) ? games.results : games;
     gamesArray_gamesResponse.forEach(game => {
         const li = elementConstructor('li', 'li-cards');
         const div_cards = elementConstructor('div', 'cards');
@@ -21,7 +21,7 @@ export function renderCards(games) {
     });
 }
 export async function Enterfullscreen(target) {
-    const main = document?.querySelector('main');
+    const main = document.querySelector('main');
     const game_detail = await fetchApi(`https://api.rawg.io/api/games/${target.id}?`);
     if (!game_detail)
         return null;
@@ -43,5 +43,12 @@ export function ExitFullscreen(event) {
     const target = event.currentTarget;
     target.style.display = 'none';
     main.style.removeProperty('filter');
+}
+export function renderGenresList(genresResponse) {
+    genresResponse.results.forEach(genre => {
+        const ul_genres = document.querySelector('#ul-genres');
+        const li_genres = liGenresConstructor(genre.name, genre.slug);
+        ul_genres.appendChild(li_genres);
+    });
 }
 //# sourceMappingURL=Renders.js.map

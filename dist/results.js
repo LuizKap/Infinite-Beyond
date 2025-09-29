@@ -2,39 +2,32 @@ import { fetchApi } from "./Fetchs.js";
 import { ExitFullscreen, Enterfullscreen, renderCards } from "./Renders.js";
 import { search } from "./Search.js";
 import { showFavorites, errorh2, favoriteHandler } from "./utils.js";
-let favorite = JSON.parse(localStorage.getItem('favorites') || '[]');
+// Recupera favoritos e query do localStorage
 const query = localStorage.getItem('search');
-let next;
+let resultsNext;
 async function init() {
-    next = await showResults();
-    if (next) {
-        const result_title = document.querySelector('#section-games-title');
-        result_title.textContent = `Showing Results For: ${query}`;
-    }
-    showFavorites(favorite);
-}
-async function showResults() {
-    if (!query) {
+    if (!query)
         return;
-    }
+    const title = document.getElementById('section-games-title');
+    const loadButton = document.querySelector('#load-button');
+    loadButton.disabled = true;
     const results = await search(query);
+    loadButton.disabled = false;
     if (!results || results.results.length === 0) {
         errorh2(`I couldn't find any results for ${query} :(`);
         return;
     }
+    const fav = JSON.parse(localStorage.getItem('favorites') || '[]');
     renderCards(results);
+    showFavorites(fav);
+    title.textContent = `Showing Results For: ${query}`;
     return results.next;
 }
 document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
     const target = ev.target;
-    favorite = favoriteHandler(target, favorite);
-});
-document.querySelector('#cards-list')?.addEventListener('click', (event) => {
-    if (!event.target) {
-        console.log('Erro no event.target fullscreen');
+    if (!target)
         return;
-    }
-    const target = event.target;
+    favoriteHandler(target);
     if (target.classList.contains('cards-img')) {
         Enterfullscreen(target);
     }
@@ -44,23 +37,22 @@ document.querySelector('#fullscreen-card')?.addEventListener('click', (ev) => {
 });
 document.querySelector('#load-button')?.addEventListener('click', async (ev) => {
     const loadBtn = ev.currentTarget;
-    if (!next) {
-        loadBtn.style.display = 'none';
+    if (!resultsNext) {
+        loadBtn.disabled = true;
+        loadBtn.textContent = 'NO MORE GAMES HERE :P';
         return;
     }
     loadBtn.disabled = true;
     loadBtn.textContent = 'LOADING MORE RESULTS :D';
-    const nextUrl = next;
-    const next_results = await fetchApi(nextUrl);
-    if (!next_results)
+    const nextResults = await fetchApi(resultsNext);
+    if (!nextResults)
         return;
-    renderCards(next_results);
-    if (!next_results.next)
-        return;
-    next = next_results.next;
+    renderCards(nextResults);
+    const fav = JSON.parse(localStorage.getItem('favorites') || '[]');
+    showFavorites(fav);
+    resultsNext = nextResults.next;
     loadBtn.disabled = false;
     loadBtn.textContent = 'LOAD MORE';
-    showFavorites(favorite);
 });
-init();
+resultsNext = await init();
 //# sourceMappingURL=results.js.map

@@ -1,14 +1,14 @@
-import { Game, type ApiResponse, type GameDetails } from "./Types.js"
+import { Game, type GamesResponse, type GameDetails, GenresResponse } from "./Types.js"
 import { fetchApi } from "./Fetchs.js";
-import { isApiResponse } from "./utils.js";
-import { elementConstructor, imageConstructor } from "./Constructors.js";
+import { isGamesResponse } from "./utils.js";
+import { elementConstructor, imageConstructor, liGenresConstructor } from "./Constructors.js";
 
-export function renderCards(games: ApiResponse | Game[]) {
+export function renderCards(games: GamesResponse | Game[]) {
 
     const cards_list = document.querySelector<HTMLElement>('#cards-list')
     if (!cards_list) return
 
-    let gamesArray_gamesResponse = isApiResponse(games) ? games.results : games
+    let gamesArray_gamesResponse = isGamesResponse(games) ? games.results : games
 
     gamesArray_gamesResponse.forEach(game => {
         const li = elementConstructor('li', 'li-cards')
@@ -28,7 +28,7 @@ export function renderCards(games: ApiResponse | Game[]) {
 
 export async function Enterfullscreen(target: HTMLImageElement) {
 
-    const main = document?.querySelector<HTMLElement>('main')
+    const main = document.querySelector<HTMLElement>('main')
 
     const game_detail = await fetchApi<GameDetails>(`https://api.rawg.io/api/games/${target.id}?`)
 
@@ -58,4 +58,14 @@ export function ExitFullscreen(event: Event): void {
     target.style.display = 'none'
 
     main.style.removeProperty('filter')
+}
+
+export function renderGenresList(genresResponse: GenresResponse){
+
+    genresResponse.results.forEach(genre => {
+       const ul_genres = document.querySelector('#ul-genres') as HTMLUListElement
+       const li_genres =  liGenresConstructor(genre.name, genre.slug)
+
+       ul_genres.appendChild(li_genres)
+    })
 }

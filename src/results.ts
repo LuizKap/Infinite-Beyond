@@ -2,79 +2,80 @@
 import { fetchApi } from "./Fetchs.js"
 import { ExitFullscreen, Enterfullscreen, renderCards } from "./Renders.js"
 import { search } from "./Search.js"
-import { ApiResponse, favorites } from "./Types.js"
+import { GamesResponse, Game } from "./Types.js"
 import { showFavorites, errorh2, favoriteHandler } from "./utils.js"
 
-let favorite: favorites[] = JSON.parse(localStorage.getItem('favorites') || '[]')
-const query = localStorage.getItem('search')
-let next: string | null | undefined
+// Recupera favoritos e query do localStorage
 
-async function init() {
-	next = await showResults()
-	if (next) {
-		const result_title = document.querySelector('#section-games-title') as HTMLTitleElement
-		result_title.textContent = `Showing Results For: ${query}`
-	}
-	showFavorites(favorite)
+const query: string | null = localStorage.getItem('search')
+let resultsNext: string | null | undefined
+
+
+async function init(): Promise<string | null | undefined> {
+    if (!query) return
+
+    const title = document.getElementById('section-games-title') as HTMLElement
+    const loadButton = document.querySelector('#load-button') as HTMLButtonElement
+    loadButton.disabled = true
+
+    const results: GamesResponse | null = await search(query)
+    loadButton.disabled = false
+
+    if (!results || results.results.length === 0) {
+        errorh2(`I couldn't find any results for ${query} :(`)
+        return
+    }
+	const fav: Game[] = JSON.parse(localStorage.getItem('favorites') || '[]')
+
+    renderCards(results)
+    showFavorites(fav)
+    title.textContent = `Showing Results For: ${query}`
+
+    return results.next
 }
 
-async function showResults() {
-	if (!query) {
-		return
-	}
-	const results = await search(query)
-	if (!results || results.results.length === 0) {
-		errorh2(`I couldn't find any results for ${query} :(`)
-		return
-	}
-	renderCards(results)
-	return results.next
-}
 
 document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
+    const target = ev.target as HTMLImageElement | null
+    if (!target) return
 
-	const target = ev.target as HTMLImageElement | null
-	favorite = favoriteHandler(target, favorite) as favorites[]
+    favoriteHandler(target)
+
+    if (target.classList.contains('cards-img')) {
+        Enterfullscreen(target)
+    }
 })
 
-document.querySelector('#cards-list')?.addEventListener('click', (event) => {
-	if (!event.target) {
-		console.log('Erro no event.target fullscreen')
-		return
-	}
-	const target = event.target as HTMLImageElement
-	if (target.classList.contains('cards-img')) {
-		Enterfullscreen(target)
-	}
-})
 
 document.querySelector('#fullscreen-card')?.addEventListener('click', (ev) => {
-	ExitFullscreen(ev)
+    ExitFullscreen(ev)
 })
 
 
 document.querySelector('#load-button')?.addEventListener('click', async (ev) => {
-	const loadBtn = ev.currentTarget as HTMLButtonElement
+    const loadBtn = ev.currentTarget as HTMLButtonElement
 
-	if (!next) {
-		loadBtn.style.display = 'none'
-		return
-	}
-	loadBtn.disabled = true
-	loadBtn.textContent = 'LOADING MORE RESULTS :D'
+    if (!resultsNext) {
+        loadBtn.disabled = true
+        loadBtn.textContent = 'NO MORE GAMES HERE :P'
+        return
+    }
 
-	const nextUrl = next
-	const next_results: ApiResponse | null = await fetchApi(nextUrl)
-	if (!next_results) return
+    loadBtn.disabled = true
+    loadBtn.textContent = 'LOADING MORE RESULTS :D'
 
-	renderCards(next_results)
-	if (!next_results.next) return
-	next = next_results.next
+    const nextResults: GamesResponse | null = await fetchApi(resultsNext)
+    if (!nextResults) return
 
-	loadBtn.disabled = false
-	loadBtn.textContent = 'LOAD MORE'
+    renderCards(nextResults)
+	
+    const fav: Game[] = JSON.parse(localStorage.getItem('favorites') || '[]')
+    showFavorites(fav)
 
-	showFavorites(favorite)
+    resultsNext = nextResults.next
+    loadBtn.disabled = false
+    loadBtn.textContent = 'LOAD MORE'
 })
 
-init()
+
+resultsNext = await init()

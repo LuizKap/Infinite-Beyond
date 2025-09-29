@@ -1,22 +1,26 @@
-import { fetchAllGames } from "./Fetchs.js";
-import { renderCards } from "./Renders.js";
+import { fetchApi, fetchGenres } from "./Fetchs.js";
+import { renderCards, renderGenresList } from "./Renders.js";
 import { Enterfullscreen, ExitFullscreen } from "./Renders.js";
 import { exitSearchInput, showSearchInput } from "./Search.js";
-import { favoriteHandler, errorh2, showFavorites } from "./utils.js";
-let currentPage = 1;
-let favorite;
-//Adicionar jogo aos favoritos
+import { favoriteHandler, errorh2, showFavorites, animateGenres } from "./utils.js";
+let next = await main();
+document.querySelector('#genres-button')?.addEventListener('click', () => {
+    animateGenres();
+});
+document.querySelector('#ul-genres')?.addEventListener('click', (ev) => {
+    const target = ev.target;
+    if (target.classList.contains('li-button-genres')) {
+        localStorage.setItem('genreQuery', target.dataset.slug);
+        window.open('http://127.0.0.1:5500/pages/genre.html', '_blank');
+        console.log(target.dataset.slug);
+    }
+});
+//Adicionar jogo aos favoritos ou entrar no card fullscreen
 document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
     const target = ev.target;
-    favorite = favoriteHandler(target, favorite);
-});
-//Listener pra entrar no card fullscreen
-document.querySelector('#cards-list')?.addEventListener('click', (event) => {
-    if (!event.target) {
-        console.log('Erro no event.target fullscreen');
+    if (!target)
         return;
-    }
-    const target = event.target;
+    favoriteHandler(target);
     if (target.classList.contains('cards-img')) {
         Enterfullscreen(target);
     }
@@ -27,26 +31,24 @@ document.querySelector('#fullscreen-card').addEventListener('click', (event) => 
 });
 //Listener pra carregar mais jogos
 document.querySelector('#load-button').addEventListener('click', async (ev) => {
-    currentPage++;
     const loadBtn = ev.currentTarget;
-    loadBtn.disabled = true;
-    loadBtn.textContent = 'LOADING MORE RESULTS :D';
-    const games = await fetchAllGames(8, currentPage);
-    if (!games) {
-        errorh2('Error :(');
-        return;
-    }
-    if (!games.next) {
-        if (loadBtn) {
-            loadBtn.disabled = true;
-            loadBtn.textContent = "No more games :(";
+    if (next) {
+        loadBtn.disabled = true;
+        loadBtn.textContent = 'LOADING MORE RESULTS :D';
+        const games = await fetchApi(`${next}&`);
+        loadBtn.disabled = false;
+        loadBtn.textContent = 'LOAD MORE';
+        const fav = JSON.parse(localStorage.getItem('favorites') || '[]');
+        if (!games)
             return;
-        }
+        renderCards(games);
+        showFavorites(fav);
+        next = games.next;
     }
-    loadBtn.disabled = false;
-    loadBtn.textContent = 'LOAD MORE';
-    renderCards(games);
-    showFavorites(favorite);
+    else {
+        loadBtn.disabled = true;
+        loadBtn.textContent = 'NO MORE GAMES HERE :P';
+    }
 });
 //Abrir search
 document.querySelector('#search-button').addEventListener('click', (ev) => {
@@ -71,15 +73,20 @@ document.querySelector('#search-input')?.addEventListener('keydown', (ev) => {
 });
 //É executado toda vez que a página carrega pra carregar os 8 primeiros jogos e pegar os favoritos do localStorage
 async function main() {
-    const games = await fetchAllGames(8, 1);
+    const games = await fetchApi(`https://api.rawg.io/api/games?page_size=8&page=1&`);
     if (!games) {
         errorh2('Error :(');
         return;
     }
     renderCards(games);
     const fav = JSON.parse(localStorage.getItem('favorites') || '[]');
-    favorite = fav;
-    showFavorites(favorite);
+    showFavorites(fav);
+    const genres = await fetchGenres(1, 20);
+    if (!genres) {
+        errorh2('Error :(');
+        return;
+    }
+    renderGenresList(genres);
+    return games.next;
 }
-main();
 //# sourceMappingURL=main.js.map

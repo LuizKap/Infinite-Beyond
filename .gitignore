@@ -11,3 +11,4 @@ package.json
 !dist/results.js
 !dist/favorites.js
 !dist/utils.js
+!dist/genre.js

@@ -1,28 +1,34 @@
 
-import { fetchAllGames } from "./Fetchs.js";
-import { renderCards } from "./Renders.js";
+import { fetchApi, fetchGenres } from "./Fetchs.js";
+import { renderCards, renderGenresList } from "./Renders.js";
 import { Enterfullscreen, ExitFullscreen } from "./Renders.js";
 import { exitSearchInput, showSearchInput } from "./Search.js";
-import { favorites } from "./Types.js";
-import { favoriteHandler, errorh2, showFavorites } from "./utils.js";
+import { Game, GamesResponse } from "./Types.js";
+import { favoriteHandler, errorh2, showFavorites, animateGenres } from "./utils.js";
 
-let currentPage: number = 1
-let favorite: favorites[]
+let next = await main()
 
-//Adicionar jogo aos favoritos
-document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
-
-    const target = ev.target as HTMLImageElement | null
-    favorite = favoriteHandler(target, favorite) as favorites[]
+document.querySelector('#genres-button')?.addEventListener('click', () => {
+    animateGenres()
 })
 
-//Listener pra entrar no card fullscreen
-document.querySelector('#cards-list')?.addEventListener('click', (event) => {
-    if (!event.target) {
-        console.log('Erro no event.target fullscreen')
-        return
+document.querySelector('#ul-genres')?.addEventListener('click', (ev) => {
+    const target = ev.target as HTMLButtonElement
+
+    if (target.classList.contains('li-button-genres')) {
+        localStorage.setItem('genreQuery', target.dataset.slug!)
+        window.open('http://127.0.0.1:5500/pages/genre.html', '_blank')
+        console.log(target.dataset.slug)
     }
-    const target = event.target as HTMLImageElement
+})
+
+//Adicionar jogo aos favoritos ou entrar no card fullscreen
+document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
+    const target = ev.target as HTMLImageElement | null
+    if (!target) return
+
+    favoriteHandler(target)
+
     if (target.classList.contains('cards-img')) {
         Enterfullscreen(target)
     }
@@ -35,29 +41,27 @@ document.querySelector('#fullscreen-card')!.addEventListener('click', (event) =>
 
 //Listener pra carregar mais jogos
 document.querySelector('#load-button')!.addEventListener('click', async (ev) => {
-    currentPage++
+
     const loadBtn = ev.currentTarget as HTMLButtonElement
 
-    loadBtn.disabled = true
-    loadBtn.textContent = 'LOADING MORE RESULTS :D'
+    if (next) {
+        loadBtn.disabled = true
+        loadBtn.textContent = 'LOADING MORE RESULTS :D'
+        const games = await fetchApi<GamesResponse>(`${next}&`)
+        loadBtn.disabled = false
+        loadBtn.textContent = 'LOAD MORE'
 
-    const games = await fetchAllGames(8, currentPage)
+        const fav: Game[] = JSON.parse(localStorage.getItem('favorites') || '[]')
 
-    if (!games) {
-        errorh2('Error :(')
-        return
+        if (!games) return
+        renderCards(games)
+        showFavorites(fav)
+        next = games.next
+    } else {
+        loadBtn.disabled = true
+        loadBtn.textContent = 'NO MORE GAMES HERE :P'
     }
-    if (!games.next) {
-        if (loadBtn) {
-            loadBtn.disabled = true
-            loadBtn.textContent = "No more games :("
-            return
-        }
-    }
-    loadBtn.disabled = false
-    loadBtn.textContent = 'LOAD MORE'
-    renderCards(games)
-    showFavorites(favorite)
+
 })
 
 //Abrir search
@@ -85,18 +89,26 @@ document.querySelector('#search-input')?.addEventListener('keydown', (ev) => {
 
 //É executado toda vez que a página carrega pra carregar os 8 primeiros jogos e pegar os favoritos do localStorage
 async function main() {
-    const games = await fetchAllGames(8, 1)
+    const games = await fetchApi<GamesResponse>(`https://api.rawg.io/api/games?page_size=8&page=1&`)
     if (!games) {
         errorh2('Error :(')
         return
     }
     renderCards(games)
-    const fav: favorites[] = JSON.parse(localStorage.getItem('favorites') || '[]')
-    favorite = fav
-    showFavorites(favorite)
+
+    const fav: Game[] = JSON.parse(localStorage.getItem('favorites') || '[]')
+    showFavorites(fav)
+
+    const genres = await fetchGenres(1, 20)
+    if (!genres) {
+        errorh2('Error :(')
+        return
+    }
+    renderGenresList(genres)
+
+    return games.next
 }
 
-main()
 
 
 

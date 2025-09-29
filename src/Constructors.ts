@@ -14,3 +14,19 @@ export function imageConstructor(element: string, className: string, alt: string
     img.dataset.clicked = clicked
     return img
 }
+
+export function liGenresConstructor(name: string, slug: string){
+    const li: HTMLLIElement = document.createElement('li')
+    const p: HTMLParagraphElement = document.createElement('p')
+    const button: HTMLButtonElement = document.createElement('button')
+
+    li.className = 'li-genres'
+    button.dataset.slug = slug
+    button.className = 'li-button-genres'
+    button.textContent = name
+    
+    li.appendChild(button)
+    li.appendChild(p)
+
+    return li
+}

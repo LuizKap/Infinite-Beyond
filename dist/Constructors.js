@@ -14,4 +14,16 @@ export function imageConstructor(element, className, alt, id, src, clicked) {
     img.dataset.clicked = clicked;
     return img;
 }
+export function liGenresConstructor(name, slug) {
+    const li = document.createElement('li');
+    const p = document.createElement('p');
+    const button = document.createElement('button');
+    li.className = 'li-genres';
+    button.dataset.slug = slug;
+    button.className = 'li-button-genres';
+    button.textContent = name;
+    li.appendChild(button);
+    li.appendChild(p);
+    return li;
+}
 //# sourceMappingURL=Constructors.js.map

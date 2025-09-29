@@ -1,79 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --font-title: "Saira", sans-serif;
-    --font-text: 'Rajdhani', sans-serif;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-html::-webkit-scrollbar {
-    width: 10px;
-}
-
-html::-webkit-scrollbar-thumb {
-    background-color: #8c00ff9c;
-    border-radius: 5px;
-}
-
-html::-webkit-scrollbar-track {
-    background-color: #280644;
-}
-
-body {
-    height: 100%;
-}
-
-header {
-    background: linear-gradient(to right, #4c1274, #b7f8048a 90%);
-    height: 13%;
-    box-shadow: 0 5px 15px 2px;
-
-    display: flex;
-    align-items: center;
-}
-
-#header-h1 {
-    font-family: var(--font-title);
-    background: linear-gradient(to right, #9c42f1, #d9ff00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-style: oblique;
-    font-size: 2rem;
-}
-
-#astronaut-img {
-    height: 5rem;
-}
-
-#home {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
-
 header>div {
-    width: 50%;
-
-    display: flex;
-    align-items: center;
+    width: 40%;
 }
 
 #header-nav {
     width: 50%;
-
     display: flex;
-    justify-content: space-evenly;
-    padding: 0 0 0 2rem;
+    justify-content: flex-end;
 }
 
 .nav-buttons {
@@ -84,9 +16,7 @@ header>div {
     font-size: 1.1em;
 }
 
-#search-button,
-#favorites-button,
-#filter-button {
+#favorites-button {
     background-color: #a179c7;
     border: solid 1px;
     border-radius: 10px 0px;
@@ -97,175 +27,9 @@ header>div {
     justify-content: center;
 }
 
-#search-button:hover,
-#favorites-button:hover,
-#filter-button:hover {
+
+#favorites-button:hover {
     box-shadow: inset 0px 5px 10px 0;
     transition: 0.4s;
     transform: scale(1.05);
-}
-
-#search-input {
-    width: 12rem;
-    font-size: 1rem;
-    font-family: var(--font-text);
-    font-weight: 600;
-    border-radius: 10px;
-    background-color: #a179c7b6;
-
-    display: none;
-}
-
-#search-input:focus {
-    border-color: #aee90ede;
-    outline: none;
-    transition: 0.2s ease;
-}
-
-main {
-    display: flex;
-    justify-content: center;
-}
-
-.li-cards {
-    list-style: none;
-}
-
-#section-games {
-    margin-top: 2rem;
-    background: linear-gradient(to bottom, #290a3d, #5b7418);
-    height: 30rem;
-    width: 70rem;
-    border-radius: 40px 5px;
-    /*box-shadow: -10px 10px 10px 5px ;*/
-    border-right: #00000093 solid 15px;
-    border-left: #000000a2 solid 15px;
-
-    overflow-y: scroll;
-}
-
-#section-games::-webkit-scrollbar {
-    width: 0px;
-}
-
-#section-games-title {
-    font-family: var(--font-title);
-    font-size: 2rem;
-    background: linear-gradient(to right, #8319e7, #d9ff00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-style: oblique;
-    display: flex;
-    justify-content: center;
-}
-
-#cards-list {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.cards {
-    background: linear-gradient(to bottom, #000000 78%, #b015d6);
-    height: 15rem;
-    width: 15rem;
-    box-shadow: 0 10px 10px 2px;
-    border-radius: 10px;
-    position: relative;
-
-    border: inset 10px #9c42f1;
-}
-
-.cards:hover {
-    transition: 1s;
-    transform: scale(1.05);
-}
-
-.cards-img {
-    cursor: pointer;
-    object-fit: cover;
-    width: 100%;
-    height: 11rem;
-}
-
-
-.favorite-icon {
-    width: 3rem;
-    height: 2rem;
-    cursor: pointer;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-
-    border: #34125080 solid 5px;
-    border-radius: 40%;
-}
-
-.favorite-icon:hover {
-    cursor: grab;
-    box-shadow: inset 10px 10px 10px 10px rgb(200, 255, 0);
-}
-
-.favorite-icon.clicked {
-    transform: scale(1.2);
-    transition: 0.2s;
-}
-
-.games-title {
-    font-size: 1rem;
-    font-family: var(--font-text);
-    font-weight: 800;
-    display: inline-block;
-
-    color: white;
-}
-
-.div-favorite_title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-#fullscreen-card {
-    position: fixed;
-    z-index: 9999;
-    background-color: #000000;
-    border: solid 10px #7e0f888c;
-    border-radius: 30px;
-    height: 60%;
-
-    display: none;
-}
-
-#fullscreen-title-description {
-    background-color: rgb(255, 255, 255);
-    text-align: center;
-    font-size: 1.1rem;
-    border: solid 10px;
-    border-radius: 30px;
-    overflow: scroll;
-}
-
-#fullscreen-img {
-    width: 45%;
-    object-fit: cover;
-}
-
-#load-button {
-    background-color: #a179c7;
-    border: solid 1px;
-    border-radius: 10px 10px;
-    width: 15rem;
-    cursor: pointer;
-    font-family: var(--font-text);
-    font-weight: 600;
-    font-size: 1.1em;
-    margin: 0 auto 0 auto;
-
-    display: flex;
-    justify-content: center;
 }

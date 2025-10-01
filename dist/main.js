@@ -1,6 +1,6 @@
 import { fetchApi, fetchGenres } from "./Fetchs.js";
 import { renderCards, renderGenresList } from "./Renders.js";
-import { Enterfullscreen, ExitFullscreen } from "./Renders.js";
+import { Enterfullscreen } from "./Renders.js";
 import { exitSearchInput, showSearchInput } from "./Search.js";
 import { favoriteHandler, errorh2, showFavorites, animateGenres } from "./utils.js";
 let next = await main();
@@ -24,10 +24,6 @@ document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
     if (target.classList.contains('cards-img')) {
         Enterfullscreen(target);
     }
-});
-// Listener pra sair do card fullscreen
-document.querySelector('#fullscreen-card').addEventListener('click', (event) => {
-    ExitFullscreen(event);
 });
 //Listener pra carregar mais jogos
 document.querySelector('#load-button').addEventListener('click', async (ev) => {

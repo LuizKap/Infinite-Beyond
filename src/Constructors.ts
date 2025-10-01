@@ -15,7 +15,7 @@ export function imageConstructor(element: string, className: string, alt: string
     return img
 }
 
-export function liGenresConstructor(name: string, slug: string){
+export function liGenresConstructor(name: string, slug: string): HTMLLIElement{
     const li: HTMLLIElement = document.createElement('li')
     const p: HTMLParagraphElement = document.createElement('p')
     const button: HTMLButtonElement = document.createElement('button')

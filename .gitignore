@@ -12,3 +12,4 @@ package.json
 !dist/favorites.js
 !dist/utils.js
 !dist/genre.js
+!dist/search.js

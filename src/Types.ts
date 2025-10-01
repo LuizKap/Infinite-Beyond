@@ -16,6 +16,27 @@ export interface GameDetails extends Game {
     description: string
 }
 
+export interface GameMovies extends Game {
+    results: {
+        id: number,
+        name: string,
+        preview: string,
+        data: {
+            480: string,
+            max: string
+        }
+    }[]
+}
+
+export interface GameScreenshot extends Game {
+    count: number,
+    next: string,
+    previous: string,
+    results: {
+        image: string,
+        hidden: boolean
+    }[]
+}
 
 
 export type Genres = {

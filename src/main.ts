@@ -1,18 +1,18 @@
 
 import { fetchApi, fetchGenres } from "./Fetchs.js";
 import { renderCards, renderGenresList } from "./Renders.js";
-import { Enterfullscreen, ExitFullscreen } from "./Renders.js";
+import { Enterfullscreen } from "./Renders.js";
 import { exitSearchInput, showSearchInput } from "./Search.js";
 import { Game, GamesResponse } from "./Types.js";
 import { favoriteHandler, errorh2, showFavorites, animateGenres } from "./utils.js";
 
 let next = await main()
 
-document.querySelector('#genres-button')?.addEventListener('click', () => {
+document.querySelector('#genres-button')?.addEventListener('click', (): void => {
     animateGenres()
 })
 
-document.querySelector('#ul-genres')?.addEventListener('click', (ev) => {
+document.querySelector('#ul-genres')?.addEventListener('click', (ev): void => {
     const target = ev.target as HTMLButtonElement
 
     if (target.classList.contains('li-button-genres')) {
@@ -23,7 +23,7 @@ document.querySelector('#ul-genres')?.addEventListener('click', (ev) => {
 })
 
 //Adicionar jogo aos favoritos ou entrar no card fullscreen
-document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
+document.querySelector('#cards-list')?.addEventListener('click', (ev): void => {
     const target = ev.target as HTMLImageElement | null
     if (!target) return
 
@@ -34,13 +34,8 @@ document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
     }
 })
 
-// Listener pra sair do card fullscreen
-document.querySelector('#fullscreen-card')!.addEventListener('click', (event) => {
-    ExitFullscreen(event)
-})
-
 //Listener pra carregar mais jogos
-document.querySelector('#load-button')!.addEventListener('click', async (ev) => {
+document.querySelector('#load-button')!.addEventListener('click', async (ev): Promise<void> => {
 
     const loadBtn = ev.currentTarget as HTMLButtonElement
 
@@ -65,16 +60,16 @@ document.querySelector('#load-button')!.addEventListener('click', async (ev) => 
 })
 
 //Abrir search
-document.querySelector('#search-button')!.addEventListener('click', (ev) => {
+document.querySelector('#search-button')!.addEventListener('click', (ev): void => {
     showSearchInput(ev.currentTarget as HTMLButtonElement)
 })
 //Fechar search
-document.querySelector('#search-input')?.addEventListener('blur', (ev) => {
+document.querySelector('#search-input')?.addEventListener('blur', (ev): void => {
     exitSearchInput(ev.currentTarget as HTMLInputElement)
 })
 
 //Pesquisar o jogo que voce quer. Se não tiver nada escrito aparece um alert e retorna.
-document.querySelector('#search-input')?.addEventListener('keydown', (ev) => {
+document.querySelector('#search-input')?.addEventListener('keydown', (ev): void => {
     const event = ev as KeyboardEvent
     if (event.key === 'Enter') {
         const search_input = ev.currentTarget as HTMLInputElement
@@ -88,7 +83,7 @@ document.querySelector('#search-input')?.addEventListener('keydown', (ev) => {
 })
 
 //É executado toda vez que a página carrega pra carregar os 8 primeiros jogos e pegar os favoritos do localStorage
-async function main() {
+async function main(): Promise< void | string | null> {
     const games = await fetchApi<GamesResponse>(`https://api.rawg.io/api/games?page_size=8&page=1&`)
     if (!games) {
         errorh2('Error :(')

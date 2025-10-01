@@ -14,7 +14,7 @@ export function isGamesResponse(value: unknown): value is GamesResponse {
 
 
 //Essa função carrega os jogos que ja estao favoritados, basicamente ela marca os que ja estão favoritados pra não causar nenhuma confusão entre as páginas
-export function showFavorites(favorite: Game[]) {
+export function showFavorites(favorite: Game[]): void {
     if (favorite.length === 0) return
 
     const cards = document.querySelectorAll('.cards')
@@ -36,7 +36,7 @@ export function showFavorites(favorite: Game[]) {
 }
 
 //Cuida de adicionar ou remover dos favoritos
-export function favoriteHandler(target: HTMLImageElement | null) {
+export function favoriteHandler(target: HTMLImageElement | null): void {
     let favorites = JSON.parse(localStorage.getItem('favorites') || '[]') as Game[]
 
     if (!target || !target.classList.contains('favorite-icon')) return
@@ -71,7 +71,7 @@ export function favoriteHandler(target: HTMLImageElement | null) {
     }
 }
 
-export function animateGenres() {
+export function animateGenres(): void {
     const sidebar = document.querySelector('#genres-sidebar') as HTMLElement
     const genre_button = document.querySelector('#genres-button') as HTMLButtonElement
 

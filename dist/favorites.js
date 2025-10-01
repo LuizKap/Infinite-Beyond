@@ -1,4 +1,4 @@
-import { renderCards, ExitFullscreen, Enterfullscreen } from "./Renders.js";
+import { renderCards, Enterfullscreen } from "./Renders.js";
 import { errorh2, favoriteHandler, showFavorites } from "./utils.js";
 init();
 async function init() {
@@ -17,8 +17,5 @@ document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
     if (target.classList.contains('cards-img')) {
         Enterfullscreen(target);
     }
-});
-document.querySelector('#fullscreen-card').addEventListener('click', (event) => {
-    ExitFullscreen(event);
 });
 //# sourceMappingURL=favorites.js.map

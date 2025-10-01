@@ -1,5 +1,5 @@
 import { fetchApi } from "./Fetchs.js";
-import { ExitFullscreen, Enterfullscreen, renderCards } from "./Renders.js";
+import { Enterfullscreen, renderCards } from "./Renders.js";
 import { search } from "./Search.js";
 import { showFavorites, errorh2, favoriteHandler } from "./utils.js";
 // Recupera favoritos e query do localStorage
@@ -31,9 +31,6 @@ document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
     if (target.classList.contains('cards-img')) {
         Enterfullscreen(target);
     }
-});
-document.querySelector('#fullscreen-card')?.addEventListener('click', (ev) => {
-    ExitFullscreen(ev);
 });
 document.querySelector('#load-button')?.addEventListener('click', async (ev) => {
     const loadBtn = ev.currentTarget;

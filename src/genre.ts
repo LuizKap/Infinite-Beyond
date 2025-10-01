@@ -1,6 +1,6 @@
 
 import { fetchApi, fetchGamesPerGenres } from "./Fetchs.js"
-import { renderCards, Enterfullscreen, ExitFullscreen } from "./Renders.js"
+import { renderCards, Enterfullscreen } from "./Renders.js"
 import { Game, GamesResponse } from "./Types.js"
 import { errorh2, favoriteHandler, showFavorites } from "./utils.js"
 
@@ -33,7 +33,7 @@ async function init(): Promise<string | null | undefined> {
     return games.next
 }
 
-document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
+document.querySelector('#cards-list')?.addEventListener('click', (ev): void => {
     const target = ev.target as HTMLImageElement | null
     if (!target) return
 
@@ -43,11 +43,8 @@ document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
         Enterfullscreen(target)
     }
 })
-document.querySelector('#fullscreen-card')?.addEventListener('click', (ev) => {
-    ExitFullscreen(ev)
-})
 
-document.querySelector('#load-button')?.addEventListener('click', async (ev) => {
+document.querySelector('#load-button')?.addEventListener('click', async (ev): Promise<void> => {
     const loadBtn = ev.currentTarget as HTMLButtonElement
 
     if (gamesNext) {

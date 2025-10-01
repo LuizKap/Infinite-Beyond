@@ -2,7 +2,7 @@ import { fetchApi } from "./Fetchs.js";
 import { GamesResponse } from "./Types.js";
 
 
-export async function search(text: string) {
+export async function search(text: string): Promise<GamesResponse | null> {
 
     if (!text) {
         return null
@@ -18,7 +18,7 @@ export async function search(text: string) {
 
 }
 
-export function showSearchInput(button: HTMLButtonElement) {
+export function showSearchInput(button: HTMLButtonElement): void {
     const search_button = button
     const input = document.querySelector('#search-input') as HTMLInputElement
 
@@ -27,10 +27,11 @@ export function showSearchInput(button: HTMLButtonElement) {
     input.focus()
 }
 
-export function exitSearchInput(searchInput: HTMLInputElement) {
+export function exitSearchInput(searchInput: HTMLInputElement): void {
     const search_button = document.querySelector('#search-button') as HTMLButtonElement
     search_button.style.display = 'flex'
     searchInput.style.display = 'none'
+    searchInput.value = ''
 }
 
 

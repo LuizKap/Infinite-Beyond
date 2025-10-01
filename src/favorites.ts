@@ -1,12 +1,12 @@
 
-import { renderCards, ExitFullscreen, Enterfullscreen } from "./Renders.js";
+import { renderCards, Enterfullscreen } from "./Renders.js";
 import { Game } from "./Types.js";
 import { errorh2, favoriteHandler, showFavorites } from "./utils.js";
 
 
 init()
 
-async function init() {
+async function init(): Promise<void> {
 
     let favorite = JSON.parse(localStorage.getItem('favorites') || '[]') as Game[]
 
@@ -18,7 +18,7 @@ async function init() {
     showFavorites(favorite)
 }
 
-document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
+document.querySelector('#cards-list')?.addEventListener('click', (ev): void => {
     const target = ev.target as HTMLImageElement | null
 
     if (!target) return
@@ -29,9 +29,4 @@ document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
     if (target.classList.contains('cards-img')) {
         Enterfullscreen(target)
     }
-})
-
-
-document.querySelector('#fullscreen-card')!.addEventListener('click', (event) => {
-    ExitFullscreen(event)
 })

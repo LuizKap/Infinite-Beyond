@@ -1,4 +1,4 @@
-import { fetchApi } from "../../dist/Fetchs.js";
+import { fetchApi } from "../dist/Fetchs.js";
 export async function search(text) {
     if (!text) {
         return null;

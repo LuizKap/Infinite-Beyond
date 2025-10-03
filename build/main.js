@@ -1,8 +1,8 @@
-import { fetchApi, fetchGenres } from "../../dist/Fetchs.js";
-import { renderCards, renderGenresList } from "../../dist/Renders.js";
-import { Enterfullscreen } from "../../dist/Renders.js";
-import { exitSearchInput, showSearchInput } from "../../dist/Search.js";
-import { favoriteHandler, errorh2, showFavorites, animateGenres } from "../../dist/utils.js";
+import { fetchApi, fetchGenres } from "../dist/Fetchs.js";
+import { renderCards, renderGenresList } from "../dist/Renders.js";
+import { Enterfullscreen } from "../dist/Renders.js";
+import { exitSearchInput, showSearchInput } from "../dist/Search.js";
+import { favoriteHandler, errorh2, showFavorites, animateGenres } from "../dist/utils.js";
 let next = await main();
 document.querySelector('#genres-button')?.addEventListener('click', () => {
     animateGenres();
@@ -11,7 +11,7 @@ document.querySelector('#ul-genres')?.addEventListener('click', (ev) => {
     const target = ev.target;
     if (target.classList.contains('li-button-genres')) {
         localStorage.setItem('genreQuery', target.dataset.slug);
-        window.open('http://127.0.0.1:5500/build/pages/genre.html', '_blank');
+        window.open('http://127.0.0.1:5500/build/genre.html', '_blank');
         console.log(target.dataset.slug);
     }
 });
@@ -64,7 +64,7 @@ document.querySelector('#search-input')?.addEventListener('keydown', (ev) => {
             return;
         }
         localStorage.setItem('search', search_input.value);
-        window.open('http://127.0.0.1:5500/build/pages/results.html', '_blank');
+        window.open('http://127.0.0.1:5500/build/results.html', '_blank');
     }
 });
 //É executado toda vez que a página carrega pra carregar os 8 primeiros jogos e pegar os favoritos do localStorage

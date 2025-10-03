@@ -1,5 +1,5 @@
-import { renderCards, Enterfullscreen } from "../../dist/Renders.js";
-import { errorh2, favoriteHandler, showFavorites } from "../../dist/utils.js";
+import { renderCards, Enterfullscreen } from "../dist/Renders.js";
+import { errorh2, favoriteHandler, showFavorites } from "../dist/utils.js";
 init();
 async function init() {
     let favorite = JSON.parse(localStorage.getItem('favorites') || '[]');

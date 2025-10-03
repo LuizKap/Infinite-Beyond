@@ -5,19 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Infinite&Beyond</title>
-    <link rel="stylesheet" href="../styles/results.css">
+    <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/global.css">
-    <script type="module" src="../dist/results.js" defer></script>
+    <script type="module" src="../js/main.js" defer></script>
     <script src="finisher-header.es5.min.js" type="text/javascript"></script>
 </head>
 
 <body class="finisher-header">
     <header>
         <div id="home-div">
-            <h1 id="header-h1">Infinite&Beyond</h1>
-            <a href="index.html" id="home"><img id="avatar" src="../img/LC IB.gif" alt="Avatar image"></a>
+                <h1 id="header-h1">Infinite&Beyond</h1>
+                 <a href="index.html" id="home"><img id="avatar" src="../img/LC IB.gif" alt="Avatar image"></a>
         </div>
+
+        <nav id="header-nav">
+            <div id="search-div">
+                <button type="button" class="nav-buttons" id="search-button">Search</button>
+                <input type="search" id="search-input">
+            </div>
+            <a href="favorites.html" target="_blank" class="nav-buttons" id="favorites-button">Favorites</a>
+            <button href="" class="nav-buttons" id="genres-button">Genres</button>
+            <aside id="genres-sidebar">
+                <ul id="ul-genres">
+                </ul>
+            </aside>
+        </nav>
     </header>
+
 
     <div id="fullscreen-card">
         <div id="div-img-trailer">
@@ -26,20 +40,21 @@
             </div>
             <div id="div-fullscreen-trailer"></div>
         </div>
-        <div id="fullscreen-title-description">
-            <h2 id="fullscreen-game-title"></h2>
-            <div id="fullscreen-game-description"></div>
+            <div id="fullscreen-title-description">
+                <h2 id="fullscreen-game-title"></h2>
+                <div id="fullscreen-game-description"></div>
+            </div>
         </div>
-    </div>
 
     <main>
         <section id="section-games">
-            <h2 id="section-games-title">RESULTS</h2>
-            <ul id="cards-list"></ul>
+            <h2 id="section-games-title">ALL GAMES</h2>
+            <ul id="cards-list">
+            </ul>
             <button type="button" id="load-button">LOAD MORE</button>
         </section>
+        
     </main>
-
 
     <script type="text/javascript">
         new FinisherHeader({
@@ -82,7 +97,7 @@
         });
     </script>
 
-    <footer></footer>
+    
 </body>
 
 </html>

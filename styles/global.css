@@ -30,16 +30,28 @@ html::-webkit-scrollbar-track {
 }
 
 body {
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 
 header {
     background: linear-gradient(to right, #4c1274, #b7f8048a 90%);
-    height: 13%;
+    height: 7rem;
+    width: 100%;
+
     box-shadow: 0 5px 15px 2px;
 
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
+    overflow: hidden;
+}
+
+#avatar {
+    width: 130px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
 #header-h1 {
@@ -52,32 +64,33 @@ header {
     font-size: 2rem;
 }
 
-#astronaut-img {
-    height: 5rem;
-}
-
 #home {
     cursor: pointer;
     display: flex;
     align-items: center;
     text-decoration: none;
+    height: 100%;
 }
 
+#home-div {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-height: 100%;
+}
 
 main {
     display: flex;
     justify-content: center;
-}
-
-.li-cards {
-    list-style: none;
+    
 }
 
 #section-games {
     margin-top: 2rem;
     background: linear-gradient(to bottom, #290a3d, #5b7418);
-    height: 33rem;
-    width: 70rem;
+    height: auto;
+    max-height: 75vh;
+    width: 90%;
     border-radius: 40px 5px;
 
     border-right: #00000093 solid 15px;
@@ -100,6 +113,12 @@ main {
     font-style: oblique;
     display: flex;
     justify-content: center;
+    margin-top: 1rem;
+}
+
+.li-cards {
+    list-style: none;
+    width: 15rem;
 }
 
 #cards-list {
@@ -113,8 +132,8 @@ main {
 
 .cards {
     background: linear-gradient(to bottom, #000000 78%, #b015d6);
-    height: 15rem;
-    width: 15rem;
+    height: 100%;
+    width: 100%;
     box-shadow: 0 10px 10px 2px;
     border-radius: 10px;
     position: relative;
@@ -219,20 +238,24 @@ main {
     height: 100%;
     position: relative;
 }
-.Arrow{
+
+.Arrow {
     position: absolute;
-    width: 2rem;
+    width: 1.5em;
     height: auto;
-    bottom: 12rem;
+    bottom: 50%;
     cursor: pointer;
 }
-#left-arrow{
+
+#left-arrow {
     left: 0;
 }
-#right-arrow{
+
+#right-arrow {
     right: 0;
 }
-#exit-fullscreen{
+
+#exit-fullscreen {
     width: 2.2rem;
     top: 0;
     position: absolute;
@@ -280,7 +303,7 @@ main {
     font-family: var(--font-text);
     font-size: 1.5rem;
     font-weight: 800;
-    width: 20rem;
+    width: 50%;
     justify-content: center;
     cursor: pointer;
     margin: 2rem 0;
@@ -290,4 +313,18 @@ main {
 #load-button:hover {
     transform: scale(1.05);
     transition: 1s;
+}
+
+@media (max-width: 480px) {
+    #avatar {
+        width: 90px;
+        height: auto;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+    }
+    #header-h1{
+        font-size: 1rem;
+        text-indent: .5rem;
+    }
+
 }

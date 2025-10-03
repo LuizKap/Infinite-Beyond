@@ -10,7 +10,6 @@ import { showFavorites, errorh2, favoriteHandler } from "./utils.js"
 const query: string | null = localStorage.getItem('search')
 let resultsNext: string | null | undefined
 
-
 async function init(): Promise<string | null | undefined> {
     if (!query) return
 

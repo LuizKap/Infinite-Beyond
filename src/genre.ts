@@ -6,6 +6,8 @@ import { errorh2, favoriteHandler, showFavorites } from "./utils.js"
 
 let gamesNext: string | null | undefined = await init()
 
+
+
 async function init(): Promise<string | null | undefined> {
     const genreQuery: string | null = localStorage.getItem('genreQuery')
     const title = document.getElementById('section-games-title') as HTMLElement

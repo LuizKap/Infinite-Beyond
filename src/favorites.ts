@@ -6,6 +6,7 @@ import { errorh2, favoriteHandler, showFavorites } from "./utils.js";
 
 init()
 
+
 async function init(): Promise<void> {
 
     let favorite = JSON.parse(localStorage.getItem('favorites') || '[]') as Game[]

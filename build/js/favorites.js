@@ -1,6 +1,8 @@
-import { renderCards, Enterfullscreen } from "../../dist/Renders.js";
-import { errorh2, favoriteHandler, showFavorites } from "../../dist/utils.js";
+import { renderCards, Enterfullscreen } from "./Renders.js";
+import { errorh2, favoriteHandler, showFavorites } from "./utils.js";
+
 init();
+
 async function init() {
     let favorite = JSON.parse(localStorage.getItem('favorites') || '[]');
     if (favorite.length === 0) {
@@ -9,13 +11,12 @@ async function init() {
     renderCards(favorite);
     showFavorites(favorite);
 }
+
 document.querySelector('#cards-list')?.addEventListener('click', (ev) => {
     const target = ev.target;
-    if (!target)
-        return;
+    if (!target) return;
     favoriteHandler(target);
     if (target.classList.contains('cards-img')) {
         Enterfullscreen(target);
     }
 });
-//# sourceMappingURL=favorites.js.map

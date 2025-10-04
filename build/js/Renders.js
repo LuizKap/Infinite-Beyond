@@ -1,6 +1,6 @@
-import { fetchApi } from "../../dist/Fetchs.js";
-import { isGamesResponse } from "../../dist/utils.js";
-import { elementConstructor, imageConstructor, liGenresConstructor } from "../../dist/Constructors.js";
+import { fetchApi } from "./Fetchs.js";
+import { isGamesResponse } from "./utils.js";
+import { elementConstructor, imageConstructor, liGenresConstructor } from "./Constructors.js";
 export function renderCards(games) {
     const cards_list = document.querySelector('#cards-list');
     if (!cards_list)

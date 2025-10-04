@@ -1,8 +1,8 @@
-import { fetchApi, fetchGenres } from "../dist/Fetchs.js";
-import { renderCards, renderGenresList } from "../dist/Renders.js";
-import { Enterfullscreen } from "../dist/Renders.js";
-import { exitSearchInput, showSearchInput } from "../dist/Search.js";
-import { favoriteHandler, errorh2, showFavorites, animateGenres } from "../dist/utils.js";
+import { fetchApi, fetchGenres } from "../../dist/Fetchs.js";
+import { renderCards, renderGenresList } from "../../dist/Renders.js";
+import { Enterfullscreen } from "../../dist/Renders.js";
+import { exitSearchInput, showSearchInput } from "../../dist/Search.js";
+import { favoriteHandler, errorh2, showFavorites, animateGenres } from "../../dist/utils.js";
 let next = await main();
 document.querySelector('#genres-button')?.addEventListener('click', () => {
     animateGenres();

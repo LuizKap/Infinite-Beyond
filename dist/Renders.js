@@ -11,7 +11,7 @@ export function renderCards(games) {
         const div_cards = elementConstructor('div', 'cards');
         const img_game = imageConstructor('img', 'cards-img', 'game image', game.id.toString(), game.background_image);
         const div_favorite_title = elementConstructor('div', 'div-favorite_title');
-        const img_favorite = imageConstructor('img', 'favorite-icon', 'favorite icon', game.id.toString(), "../img/heart-svgrepo-com.svg", 'false');
+        const img_favorite = imageConstructor('img', 'favorite-icon', 'favorite icon', game.id.toString(), "/build/img/heart-svgrepo-com.svg", 'false');
         const h3 = elementConstructor('h3', 'games-title');
         h3.textContent = game.name;
         div_favorite_title.append(img_favorite, h3);
@@ -30,7 +30,7 @@ export async function Enterfullscreen(target) {
     const img = card.querySelector('#fullscreen-img');
     const div_container = document.querySelector('#div-fullscreen-trailer');
     //Cria o exit e adicionar o evento de sair da fullscreen
-    const exit = imageConstructor('img', 'exit', 'Exit FullScreen Game', 'exit-fullscreen', '../img/delete-button.png');
+    const exit = imageConstructor('img', 'exit', 'Exit FullScreen Game', 'exit-fullscreen', './img/delete-button.png');
     exit.addEventListener('click', () => {
         ExitFullscreen();
     });
@@ -43,8 +43,8 @@ export async function Enterfullscreen(target) {
     if (!game_movies || !game_movies.results || game_movies.results.length === 0) {
         let currentScreenshot = 0;
         const screenshot = imageConstructor('img', '', 'Game Screenshot', 'game-screenshot', game_screenshot?.results[currentScreenshot]?.image ?? '');
-        const arrow_right = imageConstructor('img', 'Arrow', 'Right Arrow', 'right-arrow', '../img/rightArrow.png');
-        const arrow_left = imageConstructor('img', 'Arrow', 'Left Arrow', 'left-arrow', '../img/leftArrow.png');
+        const arrow_right = imageConstructor('img', 'Arrow', 'Right Arrow', 'right-arrow', './img/rightArrow.png');
+        const arrow_left = imageConstructor('img', 'Arrow', 'Left Arrow', 'left-arrow', './img/leftArrow.png');
         //No clique da seta da direita, vai usar o currenScreenshot como mediador pra ir pro proximo shot
         arrow_right.addEventListener('click', () => {
             // Se currentScreenshot chegar no fim ou próximo for undefined, volta pro primeiro.

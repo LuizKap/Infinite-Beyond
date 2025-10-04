@@ -1,6 +1,6 @@
-import { fetchApi } from "../dist/Fetchs.js";
-import { isGamesResponse } from "../dist/utils.js";
-import { elementConstructor, imageConstructor, liGenresConstructor } from "../dist/Constructors.js";
+import { fetchApi } from "../../dist/Fetchs.js";
+import { isGamesResponse } from "../../dist/utils.js";
+import { elementConstructor, imageConstructor, liGenresConstructor } from "../../dist/Constructors.js";
 export function renderCards(games) {
     const cards_list = document.querySelector('#cards-list');
     if (!cards_list)
@@ -11,7 +11,7 @@ export function renderCards(games) {
         const div_cards = elementConstructor('div', 'cards');
         const img_game = imageConstructor('img', 'cards-img', 'game image', game.id.toString(), game.background_image);
         const div_favorite_title = elementConstructor('div', 'div-favorite_title');
-        const img_favorite = imageConstructor('img', 'favorite-icon', 'favorite icon', game.id.toString(), "heart-svgrepo-com.svg", 'false');
+        const img_favorite = imageConstructor('img', 'favorite-icon', 'favorite icon', game.id.toString(), "build/img/heart-svgrepo-com.svg", 'false');
         const h3 = elementConstructor('h3', 'games-title');
         h3.textContent = game.name;
         div_favorite_title.append(img_favorite, h3);

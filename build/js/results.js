@@ -1,7 +1,7 @@
-import { fetchApi } from "../dist/Fetchs.js";
-import { Enterfullscreen, renderCards } from "../dist/Renders.js";
-import { search } from "../dist/Search.js";
-import { showFavorites, errorh2, favoriteHandler } from "../dist/utils.js";
+import { fetchApi } from "../../dist/Fetchs.js";
+import { Enterfullscreen, renderCards } from "../../dist/Renders.js";
+import { search } from "../../dist/Search.js";
+import { showFavorites, errorh2, favoriteHandler } from "../../dist/utils.js";
 // Recupera favoritos e query do localStorage
 const query = localStorage.getItem('search');
 let resultsNext;

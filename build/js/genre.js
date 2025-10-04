@@ -1,6 +1,6 @@
-import { fetchApi, fetchGamesPerGenres } from "../dist/Fetchs.js";
-import { renderCards, Enterfullscreen } from "../dist/Renders.js";
-import { errorh2, favoriteHandler, showFavorites } from "../dist/utils.js";
+import { fetchApi, fetchGamesPerGenres } from "../../dist/Fetchs.js";
+import { renderCards, Enterfullscreen } from "../../dist/Renders.js";
+import { errorh2, favoriteHandler, showFavorites } from "../../dist/utils.js";
 let gamesNext = await init();
 async function init() {
     const genreQuery = localStorage.getItem('genreQuery');
